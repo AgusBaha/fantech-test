@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Inventories\InventoriesController;
+use App\Http\Controllers\Sales\SalesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,22 +32,35 @@ Route::middleware(['auth', 'role:superuser'])->group(function () {
         Route::put('/datainventories/{id}', 'update')->name('datainventories.update');
         Route::delete('/datainventories/{id}', 'destroy')->name('datainventories.destroy');
     });
+
+    Route::controller(SalesController::class)->group(function () {
+        Route::get('/sales', 'index')->name('sales.index');
+        Route::get('/sales/create', 'create')->name('sales.create');
+        Route::post('/sales/store', 'store')->name('sales.store');
+        Route::get('/sales/{id}/edit', 'edit')->name('sales.edit');
+        Route::put('/sales/{id}', 'update')->name('sales.update');
+        Route::delete('/sales/{id}', 'destroy')->name('sales.destroy');
+
+        Route::get('/sales/{id}', 'detail')->name('sales.detail');
+        Route::post('/sales/storeDetail', 'storeDetail')->name('sales.store.detail');
+        Route::put('/sales/detail/{id}', 'detailUpdate')->name('sales.detail.update');
+    });
 });
 
 Route::middleware(['auth', 'role:sales'])->group(function () {
-    Route::get('sales', function () {
+    Route::get('salescoba', function () {
         return 'sales pages';
     });
 });
 
 Route::middleware(['auth', 'role:purchase'])->group(function () {
-    Route::get('purchase', function () {
+    Route::get('purchasecoba', function () {
         return 'purchase pages';
     });
 });
 
 Route::middleware(['auth', 'role:manager'])->group(function () {
-    Route::get('manager', function () {
+    Route::get('managercoba', function () {
         return 'manager pages';
     });
 });
