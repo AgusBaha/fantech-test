@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventories\InventoriesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,8 +23,13 @@ Auth::routes(
 );
 
 Route::middleware(['auth', 'role:superuser'])->group(function () {
-    Route::get('superadmin', function () {
-        return 'superadmin dashboard';
+    Route::controller(InventoriesController::class)->group(function () {
+        Route::get('/datainventories', 'index')->name('datainventories');
+        Route::get('/datainventories/create', 'create')->name('datainventories.create');
+        Route::post('/datainventories/store', 'store')->name('datainventories.store');
+        Route::get('/datainventories/{id}/edit', 'edit')->name('datainventories.edit');
+        Route::put('/datainventories/{id}', 'update')->name('datainventories.update');
+        Route::delete('/datainventories/{id}', 'destroy')->name('datainventories.destroy');
     });
 });
 
