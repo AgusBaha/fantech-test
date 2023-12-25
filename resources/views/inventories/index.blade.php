@@ -60,5 +60,17 @@
     </div>
     <!--/ Basic Bootstrap Table -->
     @push('JavaScript')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+                    @if(session('success'))
+                        Swal.fire({
+                            title: 'Congrats',
+                            text: '{{ session('success') }}',
+                            icon: 'success',
+                        });
+                    @endif
+                });
+    </script>
     @endpush
 </x-app-layout>

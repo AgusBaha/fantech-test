@@ -31,9 +31,11 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
+                                    @if (Auth::user()->role == 'superuser')
                                     <a class="dropdown-item" href="{{ route('pruchase.print', $item->id) }}"
                                         target="_blank"><i class='bx bx-printer me-1'></i>Print
                                     </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('purchase.edit', ['id' => $item->id]) }}">
                                         <i class="bx bx-edit-alt me-1"></i> Edit
                                     </a>
@@ -59,5 +61,17 @@
     </div>
     <!--/ Basic Bootstrap Table -->
     @push('JavaScript')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+                    @if(session('success'))
+                        Swal.fire({
+                            title: 'Congrats',
+                            text: '{{ session('success') }}',
+                            icon: 'success',
+                        });
+                    @endif
+                });
+    </script>
     @endpush
 </x-app-layout>
