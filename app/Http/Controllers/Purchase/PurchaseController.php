@@ -125,7 +125,7 @@ class PurchaseController extends Controller
 
         $purchase->delete();
 
-        return redirect()->route('purchase.index')->with('success', 'Penjualan berhasil dihapus.');
+        return redirect()->route('purchase.index')->with('success', 'Data Berhasil dihapus.');
     }
 
     public function detail($id)
@@ -162,7 +162,7 @@ class PurchaseController extends Controller
             'price' => $request->input('price'),
         ]);
 
-        return redirect()->route('purchase.index')->with('success', 'Detail penjualan berhasil disimpan.');
+        return redirect()->route('purchase.index')->with('success', 'Data Berhasil disimpan.');
     }
 
     public function detailUpdate(Request $request, $id)
@@ -187,7 +187,7 @@ class PurchaseController extends Controller
             'price' => $request->input('price'),
         ]);
 
-        return redirect()->route('purchase.index')->with('success', 'Penjualan berhasil diupdate');
+        return redirect()->route('purchase.index')->with('success', 'Data Berhasil diupdate');
     }
 
     public function printPruchase($id)

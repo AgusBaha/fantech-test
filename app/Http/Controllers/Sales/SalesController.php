@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SalesController extends Controller
 {
@@ -64,7 +65,7 @@ class SalesController extends Controller
             'date' => $request->input('date'),
             'user_id' => $inputUserId,
         ]);
-
+        // Inside your store method
         return redirect()->route('sales.index')->with('success', 'Data Berhasil ditambahkan');
     }
 
@@ -114,7 +115,7 @@ class SalesController extends Controller
             'user_id' => $request->input('user_id'),
         ]);
 
-        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil diperbarui.');
+        return redirect()->route('sales.index')->with('success', 'Data Berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -123,7 +124,7 @@ class SalesController extends Controller
 
         $sales->delete();
 
-        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil dihapus.');
+        return redirect()->route('sales.index')->with('success', 'Data Berhasil dihapus.');
     }
 
     public function detail($id)
@@ -161,7 +162,7 @@ class SalesController extends Controller
             'price' => $request->input('price'),
         ]);
 
-        return redirect()->route('sales.index')->with('success', 'Detail penjualan berhasil disimpan.');
+        return redirect()->route('sales.index')->with('success', 'Data Berhasil disimpan.');
     }
 
     public function detailUpdate(Request $request, $id)
@@ -186,7 +187,7 @@ class SalesController extends Controller
             'price' => $request->input('price'),
         ]);
 
-        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil diupdate');
+        return redirect()->route('sales.index')->with('success', 'Data Berhasil diupdate');
     }
 
     public function printSales($id)
