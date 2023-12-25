@@ -1,6 +1,10 @@
 <x-app-layout title="Inventory">
     @push('style')
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.bootstrap5.min.css">
     @endpush
+
     <!-- Basic Bootstrap Table -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -8,7 +12,7 @@
             <a href="{{ route('datainventories.create') }}" class="btn btn-primary">Add</a>
         </div>
         <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table" id="inventoriesTable">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -19,15 +23,13 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                @foreach ($data as $key => $value)
-                <tbody class="table-border-bottom-0">
+                <tbody>
+                    @foreach ($data as $key => $value)
                     <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $key++ }}</strong></td>
+                        <td>{{ $key + 1 }}</td>
                         <td>{{ $value->code }}</td>
                         <td>{{ $value->name }}</td>
-                        <td>
-                            {{ $value->price }}
-                        </td>
+                        <td>{{ $value->price }}</td>
                         <td>{{ $value->stock }}</td>
                         <td>
                             <div class="dropdown">
@@ -53,24 +55,45 @@
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
-                @endforeach
             </table>
         </div>
     </div>
     <!--/ Basic Bootstrap Table -->
+
     @push('JavaScript')
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.print.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-                    @if(session('success'))
-                        Swal.fire({
-                            title: 'Congrats',
-                            text: '{{ session('success') }}',
-                            icon: 'success',
-                        });
-                    @endif
+        document.addEventListener('DOMContentLoaded', function () {
+                @if(session('success'))
+                    Swal.fire({
+                        title: 'Congrats',
+                        text: '{{ session('success') }}',
+                        icon: 'success',
+                    });
+                @endif
+            });
+
+            $(document).ready(function () {
+                $('#inventoriesTable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copyHtml5',
+                        'excelHtml5',
+                        'csvHtml5',
+                        'pdfHtml5'
+                    ]
                 });
+            });
     </script>
     @endpush
 </x-app-layout>
