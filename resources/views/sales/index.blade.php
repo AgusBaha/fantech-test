@@ -31,6 +31,8 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ route('sales.print', $item->id) }}"
+                                        target="_blank"><i class='bx bx-printer me-1'></i>Print</a>
                                     <a class="dropdown-item" href="{{ route('sales.edit', ['id' => $item->id]) }}">
                                         <i class="bx bx-edit-alt me-1"></i> Edit
                                     </a>

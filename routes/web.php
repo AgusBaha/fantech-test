@@ -45,6 +45,8 @@ Route::middleware(['auth', 'role:superuser'])->group(function () {
         Route::get('/sales/{id}', 'detail')->name('sales.detail');
         Route::post('/sales/storeDetail', 'storeDetail')->name('sales.store.detail');
         Route::put('/sales/detail/{id}', 'detailUpdate')->name('sales.detail.update');
+
+        Route::get('/sales/{id}/print', 'printSales')->name('sales.print');
     });
 
     Route::controller(PurchaseController::class)->group(function () {
@@ -58,6 +60,8 @@ Route::middleware(['auth', 'role:superuser'])->group(function () {
         Route::get('/purchase/{id}', 'detail')->name('purchase.detail');
         Route::post('/purchase/storeDetail', 'storeDetail')->name('purchase.store.detail');
         Route::put('/purchase/detail/{id}', 'detailUpdate')->name('purchase.detail.update');
+
+        Route::get('/pruchase/{id}/print', 'printPruchase')->name('pruchase.print');
     });
 });
 

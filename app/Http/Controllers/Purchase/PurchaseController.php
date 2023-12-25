@@ -9,6 +9,7 @@ use App\Models\PurchaseDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class PurchaseController extends Controller
 {
@@ -187,5 +188,14 @@ class PurchaseController extends Controller
         ]);
 
         return redirect()->route('purchase.index')->with('success', 'Penjualan berhasil diupdate');
+    }
+
+    public function printPruchase($id)
+    {
+        $purchase = Purchase::with('user', 'detailPurchase.inventory')->findOrFail($id);
+        // dd($purchase);
+        $pdf = PDF::loadView('purchase.print', compact('purchase'));
+
+        return $pdf->download('purchase.pdf');
     }
 }

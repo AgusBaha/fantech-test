@@ -9,6 +9,7 @@ use App\Models\SalesDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class SalesController extends Controller
 {
@@ -186,5 +187,14 @@ class SalesController extends Controller
         ]);
 
         return redirect()->route('sales.index')->with('success', 'Penjualan berhasil diupdate');
+    }
+
+    public function printSales($id)
+    {
+        $sales = Sales::with('user', 'detailSales.inventory')->findOrFail($id);
+        // dd($sales);
+        $pdf = PDF::loadView('sales.print', compact('sales'));
+
+        return $pdf->download('sales.pdf');
     }
 }
