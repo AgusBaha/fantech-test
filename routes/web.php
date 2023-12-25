@@ -62,14 +62,32 @@ Route::middleware(['auth', 'role:superuser'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:sales'])->group(function () {
-    Route::get('salescoba', function () {
-        return 'sales pages';
+    Route::controller(SalesController::class)->group(function () {
+        Route::get('/sales', 'index')->name('sales.index');
+        Route::get('/sales/create', 'create')->name('sales.create');
+        Route::post('/sales/store', 'store')->name('sales.store');
+        Route::get('/sales/{id}/edit', 'edit')->name('sales.edit');
+        Route::put('/sales/{id}', 'update')->name('sales.update');
+        Route::delete('/sales/{id}', 'destroy')->name('sales.destroy');
+
+        Route::get('/sales/{id}', 'detail')->name('sales.detail');
+        Route::post('/sales/storeDetail', 'storeDetail')->name('sales.store.detail');
+        Route::put('/sales/detail/{id}', 'detailUpdate')->name('sales.detail.update');
     });
 });
 
 Route::middleware(['auth', 'role:purchase'])->group(function () {
-    Route::get('purchasecoba', function () {
-        return 'purchase pages';
+    Route::controller(PurchaseController::class)->group(function () {
+        Route::get('/purchase', 'index')->name('purchase.index');
+        Route::get('/purchase/create', 'create')->name('purchase.create');
+        Route::post('/purchase/store', 'store')->name('purchase.store');
+        Route::get('/purchase/{id}/edit', 'edit')->name('purchase.edit');
+        Route::put('/purchase/{id}', 'update')->name('purchase.update');
+        Route::delete('/purchase/{id}', 'destroy')->name('purchase.destroy');
+
+        Route::get('/purchase/{id}', 'detail')->name('purchase.detail');
+        Route::post('/purchase/storeDetail', 'storeDetail')->name('purchase.store.detail');
+        Route::put('/purchase/detail/{id}', 'detailUpdate')->name('purchase.detail.update');
     });
 });
 

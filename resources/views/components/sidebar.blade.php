@@ -12,24 +12,28 @@
     <li class="menu-header small text-uppercase"><span class="menu-header-text">PAGES</span></li>
     <!-- Forms -->
     <!-- Child Menu Items -->
+    @if (Auth::user()->role == 'superuser')
     <li class="menu-item {{ request()->routeIs('datainventories') ? 'active' : '' }}">
         <a href="{{ route('datainventories') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-detail"></i>
             <div data-i18n="Form Elements">Inventories</div>
         </a>
     </li>
-
+    @endif
+    @if (Auth::user()->role == 'sales' || Auth::user()->role == 'superuser')
     <li class="menu-item {{ request()->routeIs('sales.index') ? 'active' : '' }}">
         <a href="{{ route('sales.index') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-detail"></i>
             <div data-i18n="Form Layouts">Sales</div>
         </a>
     </li>
+    @endif
+    @if (Auth::user()->role == 'purchase' || Auth::user()->role == 'superuser')
     <li class="menu-item {{ request()->routeIs('purchase.index') ? 'active' : '' }}">
         <a href="{{ route('purchase.index') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-detail"></i>
             <div data-i18n="Form Layouts">Purchase</div>
         </a>
     </li>
-
+    @endif
 </ul>
