@@ -17,6 +17,9 @@
                                     placeholder="number.." />
                             </div>
                             <div class="mb-3">
+                                @if(Auth::user()->role == 'purchase')
+                                <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                                @else
                                 <label for="user_id" class="form-label">User</label>
                                 <select class="form-select" id="user_id" name="user_id"
                                     aria-label="Default select example">
@@ -25,6 +28,7 @@
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach
                                 </select>
+                                @endif
                             </div>
 
                         </div>

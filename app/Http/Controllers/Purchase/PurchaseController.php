@@ -8,6 +8,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
@@ -16,7 +17,14 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        $data = Purchase::all();
+        $user = Auth::user();
+
+        if ($user->role == 'purchase') {
+            $data = Purchase::where('user_id', $user->id)->get();
+        } else {
+            $data = Purchase::all();
+        }
+
         return view('purchase.index', compact('data'));
     }
 
@@ -38,13 +46,21 @@ class PurchaseController extends Controller
         $request->validate([
             'number' => 'required|numeric',
             'date' => 'required|date',
-            'user_id' => 'required|exists:users,id',
         ]);
+
+        // Get the ID of the logged-in user
+        $userId = Auth::id();
+
+        // Check the role of the logged-in user
+        $userRole = Auth::user()->role;
+
+        // Set the user_id based on the user's role
+        $inputUserId = ($userRole == 'purchase') ? $userId : $request->input('user_id');
 
         Purchase::create([
             'number' => $request->input('number'),
             'date' => $request->input('date'),
-            'user_id' => $request->input('user_id'),
+            'user_id' => $inputUserId,
         ]);
 
         return redirect()->route('purchase.index')->with('success', 'Data Berhasil ditambahkan');
@@ -64,7 +80,13 @@ class PurchaseController extends Controller
     public function edit(string $id)
     {
         $purchase = Purchase::findOrFail($id);
-        $data_user = User::all();
+
+        $user = Auth::user();
+        if ($user->role == 'purchase') {
+            $data_user = User::where('id', $user->id)->get();
+        } else {
+            $data_user = User::all();
+        }
 
         return view('purchase.edit', compact('purchase', 'data_user'));
     }
