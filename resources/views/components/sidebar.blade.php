@@ -25,8 +25,8 @@
             <div data-i18n="Form Layouts">Sales</div>
         </a>
     </li>
-    <li class="menu-item ">
-        <a href="" class="menu-link">
+    <li class="menu-item {{ request()->routeIs('purchase.index') ? 'active' : '' }}">
+        <a href="{{ route('purchase.index') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-detail"></i>
             <div data-i18n="Form Layouts">Purchase</div>
         </a>

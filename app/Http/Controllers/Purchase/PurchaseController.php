@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Sales;
+namespace App\Http\Controllers\Purchase;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inventories;
-use App\Models\Sales;
-use App\Models\SalesDetail;
+use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class SalesController extends Controller
+class PurchaseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Sales::all();
-        return view('sales.index', compact('data'));
+        $data = Purchase::all();
+        return view('purchase.index', compact('data'));
     }
 
     /**
@@ -26,7 +26,7 @@ class SalesController extends Controller
     public function create()
     {
         $data_user = User::all();
-        return view('sales.create', compact('data_user'));
+        return view('purchase.create', compact('data_user'));
     }
 
     /**
@@ -41,15 +41,14 @@ class SalesController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        Sales::create([
+        Purchase::create([
             'number' => $request->input('number'),
             'date' => $request->input('date'),
             'user_id' => $request->input('user_id'),
         ]);
 
-        return redirect()->route('sales.index')->with('success', 'Data Berhasil ditambahkan');
+        return redirect()->route('purchase.index')->with('success', 'Data Berhasil ditambahkan');
     }
-
 
     /**
      * Display the specified resource.
@@ -62,18 +61,18 @@ class SalesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(string $id)
     {
-        $sales = Sales::findOrFail($id);
+        $purchase = Purchase::findOrFail($id);
         $data_user = User::all();
 
-        return view('sales.edit', compact('sales', 'data_user'));
+        return view('purchase.edit', compact('purchase', 'data_user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         // Validasi data dari $request
         $request->validate([
@@ -82,45 +81,47 @@ class SalesController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        $sales = Sales::findOrFail($id);
+        $purchase = Purchase::findOrFail($id);
 
-        $sales->update([
+        $purchase->update([
             'number' => $request->input('number'),
             'date' => $request->input('date'),
             'user_id' => $request->input('user_id'),
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil diperbarui.');
+        return redirect()->route('purchase.index')->with('success', 'Penjualan berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
-        $sales = Sales::findOrFail($id);
+        $purchase = Purchase::findOrFail($id);
 
-        $sales->delete();
+        $purchase->delete();
 
-        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil dihapus.');
+        return redirect()->route('purchase.index')->with('success', 'Penjualan berhasil dihapus.');
     }
 
     public function detail($id)
     {
         $data = Inventories::all();
-        $sales = Sales::find($id);
+        $purchase = Purchase::find($id);
 
-        if (!$sales) {
+        if (!$purchase) {
             return abort(404);
         }
 
-        $salesDetail = SalesDetail::where('sales_id', $sales->id)->first();
+        $purchaseDetail = PurchaseDetail::where('purchase_id', $purchase->id)->first();
 
-        if ($salesDetail) {
-            return view('sales.detailSales.update', compact('sales', 'data', 'salesDetail'));
+        if ($purchaseDetail) {
+            return view('purchase.detailPurchase.update', compact('purchase', 'data', 'purchaseDetail'));
         }
 
-        return view('sales.detailSales.create', compact('sales', 'data'));
+        return view('purchase.detailPurchase.create', compact('purchase', 'data'));
     }
-
 
     public function storeDetail(Request $request)
     {
@@ -131,14 +132,14 @@ class SalesController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        SalesDetail::create([
-            'sales_id' => $request->input('sales_id'),
+        PurchaseDetail::create([
+            'purchase_id' => $request->input('purchase_id'),
             'inventory_id' => $request->input('inventories_id'),
             'qty' => $request->input('qty'),
             'price' => $request->input('price'),
         ]);
 
-        return redirect()->route('sales.index')->with('success', 'Detail penjualan berhasil disimpan.');
+        return redirect()->route('purchase.index')->with('success', 'Detail penjualan berhasil disimpan.');
     }
 
     public function detailUpdate(Request $request, $id)
@@ -150,19 +151,19 @@ class SalesController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        $sale = SalesDetail::find($id);
+        $purchase = PurchaseDetail::find($id);
 
-        if (!$sale) {
+        if (!$purchase) {
             return abort(404);
         }
 
-        $sale->update([
-            'sales_id' => $request->input('sales_id'),
+        $purchase->update([
+            'purchase_id' => $request->input('purchase_id'),
             'inventory_id' => $request->input('inventories_id'),
             'qty' => $request->input('qty'),
             'price' => $request->input('price'),
         ]);
 
-        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil diupdate');
+        return redirect()->route('purchase.index')->with('success', 'Penjualan berhasil diupdate');
     }
 }

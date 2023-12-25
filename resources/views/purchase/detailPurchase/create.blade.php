@@ -1,18 +1,17 @@
-<x-app-layout title="Sales Details Update">
+<x-app-layout title="Purchase Details">
     @push('style')
     @endpush
 
     <!-- Form controls -->
     <div class="col-md">
         <div class="card mb-4">
-            <h5 class="card-header">Update Sales Details</h5>
-            <form id="my-form" action="{{ route('sales.detail.update', ['id' => $salesDetail->id]) }}" method="POST">
+            <h5 class="card-header">Form Details</h5>
+            <form id="my-form" action="{{ route('purchase.store.detail') }}" method="POST">
                 @csrf
-                @method('PUT')
 
                 <div class="card-body">
                     <div class="row">
-                        <input type="hidden" id="number" name="sales_id" value="{{ $sales->id }}" />
+                        <input type="hidden" id="number" name="purchase_id" value="{{ $purchase->id }}" />
                         <div class="col-md">
                             <div class="mb-3">
                                 <label for="inventories_id" class="form-label">Inventories</label>
@@ -20,28 +19,26 @@
                                     aria-label="Default select example">
                                     <option selected disabled>Open this select inventories</option>
                                     @foreach ($data as $inventories)
-                                    <option value="{{ $inventories->id }}" @if($inventories->id ==
-                                        $salesDetail->inventories_id) selected @endif>{{ $inventories->name }}</option>
+                                    <option value="{{ $inventories->id }}">{{ $inventories->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="number" class="form-label">Qty</label>
-                                <input type="number" class="form-control" id="number" name="qty" placeholder="Qty.."
-                                    value="{{ $salesDetail->qty }}" />
+                                <input type="number" class="form-control" id="number" name="qty" placeholder="Qty.." />
                             </div>
 
                         </div>
                         <div class="col-md">
                             <div class="mb-3">
                                 <label for="number" class="form-label">Price</label>
-                                <input type="number" class="form-control" id="number" name="price" placeholder="Price.."
-                                    value="{{ $salesDetail->price }}" />
+                                <input type="number" class="form-control" id="number" name="price"
+                                    placeholder="Price.." />
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn rounded-pill btn-primary">Update</button>
-                    <a href="{{ route('sales.index') }}" class="btn rounded-pill btn-danger">Kembali</a>
+                    <button type="submit" class="btn rounded-pill btn-primary">Simpan</button>
+                    <a href="{{ route('purchase.index') }}" class="btn rounded-pill btn-danger">Kembali</a>
                 </div>
             </form>
         </div>

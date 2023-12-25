@@ -1,12 +1,12 @@
-<x-app-layout title="Sales Create">
+<x-app-layout title="Purchase Create">
     @push('style')
     @endpush
 
     <!-- Form controls -->
     <div class="col-md">
         <div class="card mb-4">
-            <h5 class="card-header">Form Sales</h5>
-            <form id="my-form" action="{{ route('sales.store') }}" method="POST">
+            <h5 class="card-header">Form Purchase</h5>
+            <form id="my-form" action="{{ route('purchase.store') }}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="row">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn rounded-pill btn-primary">Simpan</button>
-                    <a href="{{ route('sales.index') }}" class="btn rounded-pill btn-danger">Kembali</a>
+                    <a href="{{ route('purchase.index') }}" class="btn rounded-pill btn-danger">Kembali</a>
                 </div>
             </form>
         </div>

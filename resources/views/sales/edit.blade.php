@@ -6,21 +6,21 @@
     <div class="col-md">
         <div class="card mb-4">
             <h5 class="card-header">Form Sales Edit</h5>
-            <form id="my-form" action="{{ route('sales.update', ['id' => $sale->id]) }}" method="POST">
+            <form id="my-form" action="{{ route('sales.update', ['id' => $sales->id]) }}" method="POST">
                 @csrf
-                @method('PUT') {{-- Atau @method('PATCH') --}}
+                @method('PUT')
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md">
                             <div class="mb-3">
                                 <label for="number" class="form-label">Number</label>
                                 <input type="number" class="form-control" id="number" name="number"
-                                    placeholder="number.." value="{{ $sale->number }}" />
+                                    placeholder="number.." value="{{ $sales->number }}" />
                             </div>
                             <div class="mb-3">
                                 <label for="date" class="form-label">Date</label>
                                 <input type="date" class="form-control" id="date" name="date" placeholder="date.."
-                                    value="{{ $sale->date }}" />
+                                    value="{{ $sales->date }}" />
                             </div>
                         </div>
                         <div class="col-md">

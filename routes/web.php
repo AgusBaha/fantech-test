@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Inventories\InventoriesController;
+use App\Http\Controllers\Purchase\PurchaseController;
 use App\Http\Controllers\Sales\SalesController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,19 @@ Route::middleware(['auth', 'role:superuser'])->group(function () {
         Route::get('/sales/{id}', 'detail')->name('sales.detail');
         Route::post('/sales/storeDetail', 'storeDetail')->name('sales.store.detail');
         Route::put('/sales/detail/{id}', 'detailUpdate')->name('sales.detail.update');
+    });
+
+    Route::controller(PurchaseController::class)->group(function () {
+        Route::get('/purchase', 'index')->name('purchase.index');
+        Route::get('/purchase/create', 'create')->name('purchase.create');
+        Route::post('/purchase/store', 'store')->name('purchase.store');
+        Route::get('/purchase/{id}/edit', 'edit')->name('purchase.edit');
+        Route::put('/purchase/{id}', 'update')->name('purchase.update');
+        Route::delete('/purchase/{id}', 'destroy')->name('purchase.destroy');
+
+        Route::get('/purchase/{id}', 'detail')->name('purchase.detail');
+        Route::post('/purchase/storeDetail', 'storeDetail')->name('purchase.store.detail');
+        Route::put('/purchase/detail/{id}', 'detailUpdate')->name('purchase.detail.update');
     });
 });
 
